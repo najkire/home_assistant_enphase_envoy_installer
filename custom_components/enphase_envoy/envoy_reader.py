@@ -543,7 +543,9 @@ class EnvoyMetered(EnvoyStandard):
             return lifetime_production + self.reader.lifetime_production_correction
 
     daily_production_value = "endpoint_pdm_energy.production.pcu.wattHoursToday"
-    _consumption_report = "endpoint_consumption_report[?(@.reportType='total-consumption')]"
+    _consumption_report = (
+        "endpoint_consumption_report[?(@.reportType='total-consumption')]"
+    )
     _consumption_ct = "endpoint_pdm_consumption"
     voltage_value = "endpoint_production_report.cumulative.rmsVoltage"
 
@@ -1167,10 +1169,7 @@ class EnvoyReader:
 
         else:
             await self.update_endpoints(["endpoint_pdm_energy"])
-            if (
-                self.endpoint_pdm_energy
-                and self.endpoint_pdm_energy.status_code == 200
-            ):
+            if self.endpoint_pdm_energy and self.endpoint_pdm_energy.status_code == 200:
                 self.endpoint_type = ENVOY_MODEL_S
 
         if not self.endpoint_type:
@@ -1183,7 +1182,9 @@ class EnvoyReader:
 
         # Configure the correct self.data
         self.data = get_envoydataclass(
-            self.endpoint_type, self.endpoint_production_json.json(), self.disable_ct_meters
+            self.endpoint_type,
+            self.endpoint_production_json.json(),
+            self.disable_ct_meters,
         )(self)
 
     async def get_full_serial_number(self):

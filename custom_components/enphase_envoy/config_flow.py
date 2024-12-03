@@ -267,9 +267,7 @@ class EnvoyOptionsFlowHandler(config_entries.OptionsFlow):
             ): vol.All(vol.Coerce(int), vol.Range(min=30)),
             vol.Optional(
                 "disable_ct_meters",
-                default=self.config_entry.options.get(
-                    "disable_ct_meters", False
-                ),
+                default=self.config_entry.options.get("disable_ct_meters", False),
             ): bool,
             vol.Optional(
                 "disable_negative_production",

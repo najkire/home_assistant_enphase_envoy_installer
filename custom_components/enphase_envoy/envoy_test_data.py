@@ -44,13 +44,13 @@ ENVOY_ENDPOINTS = {
         "installer_required": False,
         "optional": False,
     },
-        "pdm_production": {
+    "pdm_production": {
         "url": TEST_DATA + "endpoint_pdm_production.json",
         "cache": 20,
         "installer_required": False,
         "optional": False,
     },
-        "pdm_consumption": {
+    "pdm_consumption": {
         "url": TEST_DATA + "endpoint_pdm_consumption.json",
         "cache": 20,
         "installer_required": False,
