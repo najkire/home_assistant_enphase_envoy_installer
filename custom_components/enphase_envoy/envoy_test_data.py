@@ -26,6 +26,12 @@ ENVOY_ENDPOINTS = {
         "installer_required": False,
         "optional": False,
     },
+    "consumption_report": {
+        "url": TEST_DATA + "endpoint_consumption_report.json",
+        "cache": 0,
+        "installer_required": False,
+        "optional": False,
+    },
     "production_power": {
         "url": TEST_DATA + "endpoint_production_power.json",
         "cache": 20,
@@ -34,6 +40,18 @@ ENVOY_ENDPOINTS = {
     },
     "pdm_energy": {
         "url": TEST_DATA + "endpoint_pdm_energy.json",
+        "cache": 20,
+        "installer_required": False,
+        "optional": False,
+    },
+    "pdm_production": {
+        "url": TEST_DATA + "endpoint_pdm_production.json",
+        "cache": 20,
+        "installer_required": False,
+        "optional": False,
+    },
+    "pdm_consumption": {
+        "url": TEST_DATA + "endpoint_pdm_consumption.json",
         "cache": 20,
         "installer_required": False,
         "optional": False,

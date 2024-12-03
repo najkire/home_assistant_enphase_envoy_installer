@@ -25,6 +25,12 @@ ENVOY_ENDPOINTS = {
         "installer_required": False,
         "optional": False,
     },
+    "consumption_report": {
+        "url": "https://{}/ivp/meters/reports/consumption",
+        "cache": 0,
+        "installer_required": False,
+        "optional": False,
+    },
     "production_power": {
         "url": "https://{}/ivp/mod/603980032/mode/power",
         "cache": 0,
@@ -33,6 +39,18 @@ ENVOY_ENDPOINTS = {
     },
     "pdm_energy": {
         "url": "https://{}/ivp/pdm/energy",
+        "cache": 0,
+        "installer_required": False,
+        "optional": False,
+    },
+    "pdm_production": {
+        "url": "https://{}/ivp/pdm/production",
+        "cache": 0,
+        "installer_required": False,
+        "optional": False,
+    },
+    "pdm_consumption": {
+        "url": "https://{}/ivp/pdm/consumption",
         "cache": 0,
         "installer_required": False,
         "optional": False,

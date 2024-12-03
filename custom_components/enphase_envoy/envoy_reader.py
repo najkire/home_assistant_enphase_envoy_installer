@@ -511,15 +511,24 @@ class EnvoyMetered(EnvoyStandard):
         # Add phase CT consumption value attributes, as production values
         # are fetched from inverters, but a CT _could_ be installed for consumption
         for attr, path in {
-            "consumption": ".wNow",
-            "daily_consumption": ".whToday",
-            "lifetime_consumption": ".whLifetime",
+            "consumption": ".currW",
         }.items():
-            ct_path = cls._consumption_ct
-            setattr(cls, f"{attr}_value", ct_path + path)
+            ct_path = cls._consumption_report
+            setattr(cls, f"{attr}_value", f"{ct_path}.cumulative{path}")
 
             for i, phase in enumerate(["l1", "l2", "l3"]):
                 full_path = f"{ct_path}.lines[{i}]{path}"
+                setattr(cls, f"{attr}_{phase}_value", full_path)
+
+        for attr, path in {
+            "daily_consumption": ".watt_hours_today_eim",
+            "lifetime_consumption": ".watt_hours_lifetime_eim",
+        }.items():
+            ct_path = cls._consumption_ct
+            setattr(cls, f"{attr}_value", f"{ct_path}{path}.aggregate")
+
+            for i, phase in enumerate(["l1", "l2", "l3"]):
+                full_path = f"{ct_path}{path}.channel[{i}]"
                 setattr(cls, f"{attr}_{phase}_value", full_path)
 
         return EnvoyStandard.__new__(cls)
@@ -527,19 +536,18 @@ class EnvoyMetered(EnvoyStandard):
     production_value = "endpoint_pdm_energy.production.pcu.wattsNow"
     _lifetime_production_path = "endpoint_pdm_energy.production.pcu.wattHoursLifetime"
 
-    @envoy_property(required_endpoint="endpoint_production_json")
+    @envoy_property(required_endpoint="endpoint_pdm_energy")
     def lifetime_production(self):
         lifetime_production = self._resolve_path(self._lifetime_production_path)
         if lifetime_production is not None:
             return lifetime_production + self.reader.lifetime_production_correction
 
     daily_production_value = "endpoint_pdm_energy.production.pcu.wattHoursToday"
-
-    _production_ct = (
-        "endpoint_production_json.production[?(@.type=='eim' && @.activeCount > 0)]"
+    _consumption_report = (
+        "endpoint_consumption_report[?(@.reportType='total-consumption')]"
     )
-    _consumption_ct = "endpoint_production_json.consumption[?(@.measurementType == 'total-consumption' && @.activeCount > 0)]"
-    voltage_value = _production_ct + ".rmsVoltage"
+    _consumption_ct = "endpoint_pdm_consumption"
+    voltage_value = "endpoint_production_report.cumulative.rmsVoltage"
 
 
 class EnvoyMeteredWithCT(EnvoyMetered):
@@ -571,30 +579,30 @@ class EnvoyMeteredWithCT(EnvoyMetered):
         setattr(
             cls,
             "daily_production_value",
-            "endpoint_production_json.production[?(@.type=='eim')].whToday",
+            "endpoint_pdm_energy.production.pcu.wattHoursToday",
         )
         for i, phase in enumerate(["l1", "l2", "l3"]):
             setattr(
                 cls,
                 f"daily_production_{phase}_value",
-                f"endpoint_production_json.production[?(@.type=='eim')].lines[{i}].whToday",
+                f"endpoint_pdm_production.watt_hours_today_eim.channel[{i}]",
             )
 
         # When we're using the endpoint_production_report primarily, then the following
         # endpoint can be used way less frequently
-        reader.uri_registry["endpoint_production_json"]["cache_time"] = 50
+        reader.uri_registry["endpoint_pdm_production"]["cache_time"] = 50
         reader.uri_registry["endpoint_production_inverters"]["cache_time"] = 290
 
         return EnvoyMetered.__new__(cls)
 
 
-def get_envoydataclass(envoy_type, production_json):
+def get_envoydataclass(envoy_type, production_json, disable_ct_meters):
     if envoy_type == ENVOY_MODEL_S:
         return EnvoyStandard
 
     # It is a metered Envoy, check the production json if the eim entry has activeCount > 0
     for prod in production_json.get("production", []):
-        if prod["type"] == "eim" and prod["activeCount"] > 0:
+        if not disable_ct_meters and prod["type"] == "eim" and prod["activeCount"] > 0:
             return EnvoyMeteredWithCT
 
     return EnvoyMetered
@@ -620,6 +628,7 @@ class EnvoyReader:
         disable_negative_production=False,
         disabled_endpoints=[],
         lifetime_production_correction=0,
+        disable_ct_meters=False,
     ):
         """Init the EnvoyReader."""
         self.host = host.lower()
@@ -660,6 +669,8 @@ class EnvoyReader:
         self.disable_installer_account_use = False
 
         self.is_receiving_realtime_data = False
+
+        self.disable_ct_meters = disable_ct_meters
 
         self._store = store
         self._store_data = {}
@@ -1158,10 +1169,7 @@ class EnvoyReader:
 
         else:
             await self.update_endpoints(["endpoint_pdm_energy"])
-            if (
-                self.endpoint_pdm_energy
-                and self.endpoint_pdm_energy.status_code == 200
-            ):
+            if self.endpoint_pdm_energy and self.endpoint_pdm_energy.status_code == 200:
                 self.endpoint_type = ENVOY_MODEL_S
 
         if not self.endpoint_type:
@@ -1174,7 +1182,9 @@ class EnvoyReader:
 
         # Configure the correct self.data
         self.data = get_envoydataclass(
-            self.endpoint_type, self.endpoint_production_json.json()
+            self.endpoint_type,
+            self.endpoint_production_json.json(),
+            self.disable_ct_meters,
         )(self)
 
     async def get_full_serial_number(self):

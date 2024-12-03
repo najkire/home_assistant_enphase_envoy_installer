@@ -1,0 +1,77 @@
+{
+    "report_time": "2024/12/03 14:17:22.000000 ",
+    "there_is_an_active_eim": true,
+    "watts_now_eim": 0,
+    "watt_hours_today_eim": {
+        "aggregate": 0,
+        "channel": [
+            0,
+            0,
+            0
+        ]
+    },
+    "eim_watt_hours_seven_days": {
+        "aggregate": 0,
+        "channel": [
+            0,
+            0,
+            0
+        ]
+    },
+    "watt_hours_lifetime_eim": {
+        "aggregate": 0,
+        "channel": [
+            0,
+            0,
+            0
+        ]
+    },
+    "vah_today_eim": {
+        "aggregate": 0,
+        "channel": [
+            0,
+            0,
+            0
+        ]
+    },
+    "vah_lifetime_eim": {
+        "aggregate": 0,
+        "channel": [
+            0,
+            0,
+            0
+        ]
+    },
+    "varh_lead_today_eim": {
+        "aggregate": 0,
+        "channel": [
+            0,
+            0,
+            0
+        ]
+    },
+    "varh_lag_today_eim": {
+        "aggregate": 0,
+        "channel": [
+            0,
+            0,
+            0
+        ]
+    },
+    "varh_lead_lifetime_eim": {
+        "aggregate": 0,
+        "channel": [
+            0,
+            0,
+            0
+        ]
+    },
+    "varh_lag_lifetime_eim": {
+        "aggregate": 0,
+        "channel": [
+            0,
+            0,
+            0
+        ]
+    }
+}
