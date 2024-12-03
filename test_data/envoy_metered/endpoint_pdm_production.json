@@ -1,0 +1,91 @@
+{
+    "report_time": "2024/12/03 12:51:23.000000 ",
+    "watts_now_pcu": 805,
+    "joules_today_pcu": 10429200,
+    "pcu_joules_seven_days": 118735200,
+    "joules_lifetime_pcu": 49108140000,
+    "there_is_an_active_eim": true,
+    "watts_now_eim": 0,
+    "watt_hours_today_eim": {
+        "aggregate": 0,
+        "channel": [
+            0,
+            0,
+            0
+        ]
+    },
+    "eim_watt_hours_seven_days": {
+        "aggregate": 0,
+        "channel": [
+            0,
+            0,
+            0
+        ]
+    },
+    "watt_hours_lifetime_eim": {
+        "aggregate": 0,
+        "channel": [
+            0,
+            0,
+            0
+        ]
+    },
+    "vah_today_eim": {
+        "aggregate": 811,
+        "channel": [
+            811,
+            0,
+            0
+        ]
+    },
+    "vah_lifetime_eim": {
+        "aggregate": 3961540,
+        "channel": [
+            3961540,
+            0,
+            0
+        ]
+    },
+    "varh_lead_today_eim": {
+        "aggregate": 0,
+        "channel": [
+            0,
+            0,
+            0
+        ]
+    },
+    "varh_lag_today_eim": {
+        "aggregate": 1,
+        "channel": [
+            1,
+            0,
+            0
+        ]
+    },
+    "varh_lead_lifetime_eim": {
+        "aggregate": 0,
+        "channel": [
+            0,
+            0,
+            0
+        ]
+    },
+    "varh_lag_lifetime_eim": {
+        "aggregate": 4577,
+        "channel": [
+            4577,
+            0,
+            0
+        ]
+    },
+    "there_is_an_active_rgm": false,
+    "watts_now_rgm": 0,
+    "watt_hours_today_rgm": 0,
+    "rgm_watt_hours_seven_days": 0,
+    "watt_hours_lifetime_rgm": 0,
+    "there_is_an_active_pmu": false,
+    "watts_now_pmu": 0,
+    "watt_hours_today_pmu": 0,
+    "pmu_watt_hours_seven_days": 0,
+    "watt_hours_lifetime_pmu": 0
+}

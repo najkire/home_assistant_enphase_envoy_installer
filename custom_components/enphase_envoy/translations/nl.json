@@ -29,6 +29,7 @@
         "data": {
           "enable_realtime_updates": "[Envoy-S Metered] Gebruik real-time updates",
           "realtime_update_throttle": "Minimale tijd tussen real-time updates [s]",
+          "disable_ct_meters": "[Envoy-S Metered] CT metingen uitschakelen",
           "disable_negative_production": "[Envoy-S Metered] Voorkom negatieve productie waardes",
           "time_between_update": "Minimum tijd tussen entity updates [s]",
           "getdata_timeout": "Maximum tijd voor het ophalen van data vanaf envoy [s]",

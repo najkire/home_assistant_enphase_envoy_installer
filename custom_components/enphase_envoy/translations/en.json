@@ -29,6 +29,7 @@
         "data": {
           "enable_realtime_updates": "[Envoy-S Metered] Enable realtime updates",
           "realtime_update_throttle": "Minimum time between realtime entity updates [s]",
+          "disable_ct_meters": "[Envoy-S Metered] Disable CT Meters",
           "disable_negative_production": "[Envoy-S Metered] Disable negative production values",
           "time_between_update": "Minimum time between entity updates [s]",
           "getdata_timeout": "Timeout value for fetching data from envoy [s]",
