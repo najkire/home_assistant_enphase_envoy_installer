@@ -544,7 +544,7 @@ class EnvoyMetered(EnvoyStandard):
 
     daily_production_value = "endpoint_pdm_energy.production.pcu.wattHoursToday"
     _consumption_report = (
-        "endpoint_consumption_report[?(@.reportType='total-consumption')]"
+        "endpoint_consumption_report.[?(@.reportType='total-consumption')]"
     )
     _consumption_ct = "endpoint_pdm_consumption"
     voltage_value = "endpoint_production_report.cumulative.rmsVoltage"
