@@ -1060,16 +1060,16 @@ class EnvoyReader:
         for endpoint in endpoints:
             endpoint_settings = self.uri_registry.get(endpoint)
 
+            if endpoint_settings == None:
+                _LOGGER.error(f"No settings found for uri {endpoint}")
+                continue
+
             if endpoint_settings["optional"] and endpoint in self.disabled_endpoints:
                 _LOGGER.info(
                     "Skipping update of disabled %s: %s",
                     endpoint,
                     endpoint_settings["url"],
                 )
-                continue
-
-            if endpoint_settings == None:
-                _LOGGER.error(f"No settings found for uri {endpoint}")
                 continue
 
             if endpoint_settings["installer_required"] and (
