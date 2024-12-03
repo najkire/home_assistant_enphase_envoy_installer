@@ -402,21 +402,11 @@ class EnvoyStandard(EnvoyData):
             "model": getattr(self, "ALIAS", self.__class__.__name__[5:]),
         }
 
-    production_value = path_by_token(
-        owner="endpoint_production_v1.wattsNow",
-        installer="endpoint_pdm_energy.production.pcu.wattsNow",
-    )
-    daily_production_value = path_by_token(
-        owner="endpoint_production_v1.wattHoursToday",
-        installer="endpoint_pdm_energy.production.pcu.wattHoursToday",
-    )
+    production_value = "endpoint_pdm_energy.production.pcu.wattsNow"
+    daily_production_value = "endpoint_pdm_energy.production.pcu.wattHoursToday"
+    _lifetime_production_path = "endpoint_pdm_energy.production.pcu.wattHoursLifetime"
 
-    _lifetime_production_path = path_by_token(
-        owner="endpoint_production_v1.wattHoursLifetime",
-        installer="endpoint_pdm_energy.production.pcu.wattHoursLifetime",
-    )
-
-    @envoy_property(required_endpoint="endpoint_production_v1")
+    @envoy_property(required_endpoint="endpoint_pdm_energy")
     def lifetime_production(self):
         lifetime_production = self._resolve_path(self._lifetime_production_path)
         if lifetime_production is not None:
@@ -534,13 +524,8 @@ class EnvoyMetered(EnvoyStandard):
 
         return EnvoyStandard.__new__(cls)
 
-    _production = "endpoint_production_json.production[?(@.type=='inverters')]"
-    production_value = _production + ".wNow"
-
-    _lifetime_production_path = path_by_token(
-        owner=_production + ".whLifetime",
-        installer="endpoint_pdm_energy.production.pcu.wattHoursLifetime",
-    )
+    production_value = "endpoint_pdm_energy.production.pcu.wattsNow"
+    _lifetime_production_path = "endpoint_pdm_energy.production.pcu.wattHoursLifetime"
 
     @envoy_property(required_endpoint="endpoint_production_json")
     def lifetime_production(self):
@@ -1172,10 +1157,10 @@ class EnvoyReader:
             self.endpoint_type = ENVOY_MODEL_M
 
         else:
-            await self.update_endpoints(["endpoint_production_v1"])
+            await self.update_endpoints(["endpoint_pdm_energy"])
             if (
-                self.endpoint_production_v1
-                and self.endpoint_production_v1.status_code == 200
+                self.endpoint_pdm_energy
+                and self.endpoint_pdm_energy.status_code == 200
             ):
                 self.endpoint_type = ENVOY_MODEL_S
 
