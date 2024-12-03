@@ -141,7 +141,7 @@ Available entities differ per Envoy type and configuration.
 
 ## Installation
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=vincentwolsink&repository=home_assistant_enphase_envoy_installer&category=integration)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=najkire&repository=home_assistant_enphase_envoy_installer&category=integration)
 
 Or follow these steps:
 1. Install [HACS](https://hacs.xyz/) if you haven't already

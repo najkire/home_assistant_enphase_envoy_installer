@@ -14,12 +14,6 @@ ENVOY_ENDPOINTS = {
         "installer_required": False,
         "optional": False,
     },
-    "production_v1": {
-        "url": TEST_DATA + "endpoint_production_v1.json",
-        "cache": 20,
-        "installer_required": False,
-        "optional": False,
-    },
     "production_inverters": {
         "url": TEST_DATA + "endpoint_production_inverters.json",
         "cache": 20,
@@ -41,7 +35,7 @@ ENVOY_ENDPOINTS = {
     "pdm_energy": {
         "url": TEST_DATA + "endpoint_pdm_energy.json",
         "cache": 20,
-        "installer_required": True,
+        "installer_required": False,
         "optional": False,
     },
     # Battery endpoints

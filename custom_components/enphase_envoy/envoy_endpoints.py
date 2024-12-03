@@ -13,12 +13,6 @@ ENVOY_ENDPOINTS = {
         "installer_required": False,
         "optional": False,
     },
-    "production_v1": {
-        "url": "https://{}/api/v1/production",
-        "cache": 0,
-        "installer_required": False,
-        "optional": False,
-    },
     "production_inverters": {
         "url": "https://{}/api/v1/production/inverters",
         "cache": 0,
@@ -40,7 +34,7 @@ ENVOY_ENDPOINTS = {
     "pdm_energy": {
         "url": "https://{}/ivp/pdm/energy",
         "cache": 0,
-        "installer_required": True,
+        "installer_required": False,
         "optional": False,
     },
     # Battery endpoints
